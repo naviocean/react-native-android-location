@@ -22,7 +22,7 @@ public class RNALocationModule extends ReactContextBaseJavaModule{
     public static final String TAG = RNALocationModule.class.getSimpleName();
     // Save last Location Provided
     private Location mLastLocation;
-
+    private LocationManager locationManager;
     //The React Native Context
     ReactApplicationContext mReactContext;
 
@@ -33,8 +33,7 @@ public class RNALocationModule extends ReactContextBaseJavaModule{
         // Save Context for later use
         mReactContext = reactContext;
 
-        LocationManager locationManager = (LocationManager) mReactContext.getSystemService(Context.LOCATION_SERVICE);
-        mLastLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        
 
     }
 
@@ -49,6 +48,8 @@ public class RNALocationModule extends ReactContextBaseJavaModule{
      */
     @ReactMethod
     public void getLocation() {
+        locationManager = (LocationManager) mReactContext.getSystemService(Context.LOCATION_SERVICE);
+        mLastLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         if (mLastLocation != null) {
             try {
                 double Longitude;
